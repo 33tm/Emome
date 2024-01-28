@@ -5,7 +5,10 @@ import * as path from "path"
 const open = () => {
     const [window] = BrowserWindow.getAllWindows()
 
-    if (window) return window.close()
+    if (window) {
+        window.isFocused() ? window.hide() : window.show()
+        return
+    }
 
     const { width, height } = screen.getPrimaryDisplay().workAreaSize
 
@@ -16,12 +19,13 @@ const open = () => {
         y: height - 500,
         frame: false,
         resizable: false,
-        fullscreenable: false
+        fullscreenable: false,
+        skipTaskbar: true
     })
 
-    emome.on("blur", () => emome.hide())
-
     emome.loadFile("../index.html")
+
+    emome.on("blur", () => emome.hide())
 }
 
 app.whenReady().then(async () => {
@@ -46,6 +50,6 @@ app.whenReady().then(async () => {
     }).show()
 })
 
-app.on("window-all-closed", () => app.dock.hide())
+// app.on("window-all-closed", () => app.dock.hide())
 
 app.on("will-quit", () => globalShortcut.unregisterAll())
