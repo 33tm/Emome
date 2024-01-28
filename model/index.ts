@@ -56,14 +56,13 @@ model.compile({
 })
 
 const { images, labels } = load("./FER-2013/train")
-const test = load("./FER-2013/test")
 
 model.fit(images, labels, {
-    epochs: 10,
-    batchSize: 4,
+    epochs: 8,
+    batchSize: 128,
     validationSplit: 0.15
 }).then(({ history }) => {
-    const { images, labels } = test
+    const { images, labels } = load("./FER-2013/test")
     const result = model.evaluate(images, labels)
     console.log(`Loss ${history.loss[0]} ${result[0].dataSync()[0].toFixed(3)}`)
     console.log(`Accuracy ${history.acc[0]} ${result[1].dataSync()[0].toFixed(3)}`)

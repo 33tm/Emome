@@ -43,7 +43,24 @@
                 })
                 .catch(() => message.innerHTML = "Couldn't access camera!")
 
-            const model = tf.loadLayersModel("./model/model.json")
+            tf.loadLayersModel("./model/model.json")
+                .then(model => {
+                    setInterval(() => {
+                        const tensor = tf.browser
+                            .fromPixels(video)
+                            .resizeNearestNeighbor([96, 96])
+                            .mean(2)
+                            .toFloat()
+                            .expandDims(0)
+                            .expandDims(-1)
+
+                        const prediction = model.predict(tensor)
+                        const emotions = ["Angry", "Disgust", "Fear", "Happy", "Neutral", "Sad", "Surprise"]
+                        console.log(prediction.arraySync()[0].forEach((e, i) => console.log(emotions[i], e)))
+                        const emotion = emotions[prediction.argMax(-1).arraySync()[0]]
+                        message.innerHTML = emotion
+                    }, 1000)
+                })
         </script>
     </body>
 </html>
