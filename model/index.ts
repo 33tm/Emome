@@ -11,7 +11,6 @@ const load = (path: string) => {
         for (const file of readdirSync(join(path, category))) {
             const buffer = readFileSync(join(path, category, file))
             const tensor = tf.node.decodeImage(buffer)
-                .resizeNearestNeighbor([96, 96])
                 .toFloat()
                 .div(tf.scalar(255.0))
                 .expandDims()
@@ -28,7 +27,7 @@ const load = (path: string) => {
 const model = tf.sequential()
 
 model.add(tf.layers.conv2d({
-    inputShape: [96, 96, 1],
+    inputShape: [48, 48, 1],
     filters: 32,
     kernelSize: [3, 3],
     activation: "relu",
