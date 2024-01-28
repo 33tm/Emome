@@ -36,7 +36,7 @@ app.whenReady().then(async () => {
     //     return { shortcut: "Shift+Option+E" }
     // }).then(data => JSON.parse(data.toString()))
 
-    const shortcut = "Shift+Alt+E"
+    const shortcut = process.platform === "darwin" ? "Shift+Option+E" : "Shift+Alt+E"
 
     globalShortcut.register(shortcut, open)
 
