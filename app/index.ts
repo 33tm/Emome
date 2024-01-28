@@ -3,20 +3,25 @@ import { readFile, writeFile } from "fs/promises"
 import * as path from "path"
 
 const open = () => {
+    const [window] = BrowserWindow.getAllWindows()
+
+    if (window) return window.close()
+
     const { width, height } = screen.getPrimaryDisplay().workAreaSize
 
-    const window = new BrowserWindow({
+    const emome = new BrowserWindow({
         width: 400,
         height: 500,
         x: width - 400,
         y: height - 500,
         frame: false,
         resizable: false,
+        fullscreenable: false
     })
 
-    window.on("blur", () => window.hide())
+    emome.on("blur", () => emome.hide())
 
-    window.loadFile("../index.html")
+    emome.loadFile("../index.html")
 }
 
 app.whenReady().then(async () => {
