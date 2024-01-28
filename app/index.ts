@@ -9,7 +9,7 @@ const open = () => {
         width: 400,
         height: 500,
         x: width - 400,
-        y: height,
+        y: height - 500,
         frame: false,
         resizable: false,
     })
@@ -22,10 +22,12 @@ const open = () => {
 app.whenReady().then(async () => {
     const config = path.join(app.getPath("userData"), "config.json")
 
-    const { shortcut } = await readFile(config).catch(() => {
-        writeFile(config, JSON.stringify({ shortcut: "Shift+Option+E" }))
-        return { shortcut: "Shift+Option+E" }
-    }).then(data => JSON.parse(data.toString()))
+    // const { shortcut } = await readFile(config).catch(() => {
+    //     writeFile(config, JSON.stringify({ shortcut: "Shift+Option+E" }))
+    //     return { shortcut: "Shift+Option+E" }
+    // }).then(data => JSON.parse(data.toString()))
+
+    const shortcut = "Shift+Alt+E"
 
     globalShortcut.register(shortcut, open)
 
