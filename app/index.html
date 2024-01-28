@@ -49,16 +49,15 @@
                         tf.engine().startScope()
                         const tensor = tf.browser
                             .fromPixels(video)
-                            .resizeNearestNeighbor([48, 48])
+                            .resizeNearestNeighbor([96, 96])
                             .mean(2)
                             .expandDims(0)
                             .expandDims(-1)
 
                         const prediction = model.predict(tensor)
-                        const emotions = ["Angry", "Disgust", "Fear", "Happy", "Neutral", "Sad", "Surprise"]
-                        const emotion = emotions[prediction.argMax(-1).arraySync()[0]]
-                        console.log(emotion)
-                        message.innerHTML = emotion
+                        message.innerHTML = ["Angry", "Fear", "Happy", "Neutral", "Sad"][prediction.arraySync()[0]
+                            .filter((_, i) => i !== 2 && i !== 6)
+                            .reduce((max, x, i, arr) => x > arr[max] ? i : max, 0)]
 
                         tf.engine().endScope()
                     }, 100)

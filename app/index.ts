@@ -1,4 +1,4 @@
-import { app, screen, globalShortcut, BrowserWindow, Notification, Tray } from "electron"
+import { app, screen, globalShortcut, BrowserWindow, Notification, Tray, ipcMain } from "electron"
 import { readFile, writeFile } from "fs/promises"
 import { join } from "path"
 
@@ -9,6 +9,10 @@ const open = () => {
         window.close()
         return
     }
+
+    ipcMain.on("emoji", async () => {
+        console.log("emoji")
+    })
 
     const { width, height } = screen.getPrimaryDisplay().workAreaSize
 
@@ -22,7 +26,9 @@ const open = () => {
         fullscreenable: false,
         skipTaskbar: true,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: join(__dirname, "preload.js")
         }
     })
 
