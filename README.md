@@ -2,6 +2,7 @@
 
 ## Built With
 - [Electron](https://electronjs.org)
+- [TensorFlow](https://tensorflow.org)
 
 ## Sources
 - [Twemoji](https://twemoji.twitter.com/)
