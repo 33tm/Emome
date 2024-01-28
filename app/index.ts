@@ -1,12 +1,12 @@
 import { app, screen, globalShortcut, BrowserWindow, Notification, Tray } from "electron"
 import { readFile, writeFile } from "fs/promises"
-import * as path from "path"
+import { join } from "path"
 
 const open = () => {
     const [window] = BrowserWindow.getAllWindows()
 
-    if (window) {
-        window.isFocused() ? window.hide() : window.show()
+    if (window && window.isFocused()) {
+        window.close()
         return
     }
 
@@ -25,11 +25,11 @@ const open = () => {
 
     emome.loadFile("../index.html")
 
-    emome.on("blur", () => emome.hide())
+    emome.on("blur", () => emome.close())
 }
 
 app.whenReady().then(async () => {
-    const config = path.join(app.getPath("userData"), "config.json")
+    const config = join(app.getPath("userData"), "config.json")
 
     // const { shortcut } = await readFile(config).catch(() => {
     //     writeFile(config, JSON.stringify({ shortcut: "Shift+Option+E" }))
@@ -50,6 +50,6 @@ app.whenReady().then(async () => {
     }).show()
 })
 
-// app.on("window-all-closed", () => app.dock.hide())
+app.on("window-all-closed", () => process.platform === "darwin" && app.dock.hide())
 
 app.on("will-quit", () => globalShortcut.unregisterAll())
