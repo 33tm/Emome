@@ -49,9 +49,8 @@
                         tf.engine().startScope()
                         const tensor = tf.browser
                             .fromPixels(video)
-                            .resizeNearestNeighbor([96, 96])
+                            .resizeNearestNeighbor([48, 48])
                             .mean(2)
-                            .toFloat()
                             .expandDims(0)
                             .expandDims(-1)
 

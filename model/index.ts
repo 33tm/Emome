@@ -58,7 +58,7 @@ const { images, labels } = load("./FER-2013/train")
 
 model.fit(images, labels, {
     epochs: 8,
-    batchSize: 128,
+    batchSize: 4,
     validationSplit: 0.15
 }).then(({ history }) => {
     const { images, labels } = load("./FER-2013/test")
