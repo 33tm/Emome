@@ -30,7 +30,7 @@
     </head>
     <body>
         <h1>Emome</h1>
-        <video id="video" width="350" height="400" autoplay></video>
+        <video id="video" width="350" height="200" autoplay></video>
         <p id="message"></p>
         <script>
             const video = document.getElementById("video")
@@ -46,6 +46,7 @@
             tf.loadLayersModel("./model/model.json")
                 .then(model => {
                     setInterval(() => {
+                        tf.engine().startScope()
                         const tensor = tf.browser
                             .fromPixels(video)
                             .resizeNearestNeighbor([96, 96])
@@ -56,10 +57,13 @@
 
                         const prediction = model.predict(tensor)
                         const emotions = ["Angry", "Disgust", "Fear", "Happy", "Neutral", "Sad", "Surprise"]
-                        console.log(prediction.arraySync()[0].forEach((e, i) => console.log(emotions[i], e)))
                         const emotion = emotions[prediction.argMax(-1).arraySync()[0]]
+                        console.log(emotion)
                         message.innerHTML = emotion
-                    }, 1000)
+
+                        tf.engine().endScope()
+
+                    }, 100)
                 })
         </script>
     </body>

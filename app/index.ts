@@ -14,13 +14,16 @@ const open = () => {
 
     const emome = new BrowserWindow({
         width: 400,
-        height: 500,
+        height: 300,
         x: width - 400,
-        y: height - 500,
+        y: height - 300,
         frame: false,
         resizable: false,
         fullscreenable: false,
-        skipTaskbar: true
+        skipTaskbar: true,
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     emome.loadFile("../index.html")
