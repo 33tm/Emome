@@ -5,7 +5,7 @@
         "start": "tsc && node dist"
     },
     "dependencies": {
-        "@tensorflow/tfjs-node-gpu": "^4.16.0"
+        "@tensorflow/tfjs-node": "^4.16.0"
     },
     "devDependencies": {
         "typescript": "^5.3.3"
